@@ -1,0 +1,31 @@
+app:
+  name: 'onteon-demo-app-fridge-docker'
+  version: '1.0.0'
+  appType: 'standard'
+  procType: 'docker'
+  processProvider:
+    name: 'DockerOsProcessProviderImpl'
+    version: '1.0.0'
+    executable:
+      start:
+        imageName: 'onteon/demo-app-fridge:1.0.0'
+        exposedPort: '${ont_port_1}'
+        innerPort: '3000'
+        pullNewerImage: false
+        successLine: 'Listening at port 3000'
+  placeHolder:
+    name: 'PlaceHolderManagerImpl'
+    version: '1.0.0'
+    filesToReplace:
+    variables:
+  serviceRepository:
+    healthCheckUrl: 'http://${address}:${ont_port_1}/isAlive'
+    entities:
+      - entity:
+          priority: 1
+          port: ${ont_port_1}
+          protocol:
+            type: 'HTTP'
+            version: '1.1'
+          isExternal: false
+          isInternal: true
