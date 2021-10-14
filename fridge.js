@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const portIndex = process.argv.indexOf("--port");
+const port = portIndex > -1 ? parseInt(process.argv[portIndex + 1]) : 3000
 
 const minItems = 5;
 const maxItems = 10;
