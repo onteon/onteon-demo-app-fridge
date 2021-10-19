@@ -1,4 +1,6 @@
-docker build -f docker/Dockerfile -t onteon/demo-app-fridge:1.0.0 .
+#!/usr/bin/env bash
+
+rm -r build
 
 mkdir -p build/onteon-demo-app-fridge/docker/bin
 mkdir -p build/onteon-demo-app-fridge/docker/conf
