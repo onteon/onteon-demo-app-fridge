@@ -7,11 +7,9 @@ const minItems = 5;
 const maxItems = 10;
 const upperCasedNames = false;
 
-function randomWithSeed(seed) {
-    return Math.abs(Math.floor(Math.sin(seed) * 10000000000000000));
-}
-
 app.get('/api/v1/fridge/:userId', (req, res) => {
+    logRequest(req)
+
     const {userId} = req.params;
     let seed = 0;
 
@@ -47,6 +45,14 @@ app.get('/isAlive', (req, res) => {
 app.listen(port, () => {
     console.log(`Listening at port ${port}`)
 })
+
+function logRequest(req) {
+    console.log(`${req.method} ${req.url} (${req.ip})`)
+}
+
+function randomWithSeed(seed) {
+    return Math.abs(Math.floor(Math.sin(seed) * 10000000000000000));
+}
 
 function getFridgeItems(seed) {
     function getValueFromRange(a, b) {
