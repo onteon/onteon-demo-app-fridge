@@ -1,3 +1,4 @@
+const axios = require('axios')
 const express = require('express')
 const app = express()
 const portIndex = process.argv.indexOf("--port");
@@ -6,6 +7,8 @@ const port = portIndex > -1 ? parseInt(process.argv[portIndex + 1]) : 3000
 const minItems = 5;
 const maxItems = 10;
 const upperCasedNames = false;
+
+const alwaysInFridgeBaseApiUrl = "http://onteon-host:8021/_by_name/onteon-demo-app-always-in-fridge-native/api/v1"
 
 app.get('/api/v1/fridge/:userId', (req, res) => {
     logRequest(req)
@@ -23,7 +26,7 @@ app.get('/api/v1/fridge/:userId', (req, res) => {
         fridgeItems.forEach(item => item.name = item.name.toUpperCase())
     }
 
-    const resultItems = [];
+    let resultItems = [];
     let numberOfItems = minItems + random % (maxItems - minItems);
     if (numberOfItems > fridgeItems.length) {
         numberOfItems = fridgeItems.length;
@@ -35,7 +38,12 @@ app.get('/api/v1/fridge/:userId', (req, res) => {
         random = randomWithSeed(seed);
     }
 
-    res.send(resultItems);
+    axios.get(`${alwaysInFridgeBaseApiUrl}/items/`)
+        .then(response => {
+            resultItems = resultItems.concat(response.data)
+        })
+        .catch(error => console.log("Error during getting items that are always in fridge, due to: " + error))
+        .then(() => res.send(resultItems));
 })
 
 app.get('/isAlive', (req, res) => {
