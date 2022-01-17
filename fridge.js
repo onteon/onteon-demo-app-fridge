@@ -10,11 +10,9 @@ const upperCasedNames = false;
 
 const alwaysInFridgeBaseApiUrl = "http://onteon-host:8021/_by_name/onteon-demo-app-always-in-fridge-native/api/v1"
 
-function randomWithSeed(seed) {
-    return Math.abs(Math.floor(Math.sin(seed) * 10000000000000000));
-}
-
 app.get('/api/v1/fridge/:userId', (req, res) => {
+    logRequest(req)
+
     const {userId} = req.params;
     let seed = 0;
 
@@ -55,6 +53,14 @@ app.get('/isAlive', (req, res) => {
 app.listen(port, () => {
     console.log(`Listening at port ${port}`)
 })
+
+function logRequest(req) {
+    console.log(`${req.method} ${req.url} (${req.ip})`)
+}
+
+function randomWithSeed(seed) {
+    return Math.abs(Math.floor(Math.sin(seed) * 10000000000000000));
+}
 
 function getFridgeItems(seed) {
     function getValueFromRange(a, b) {
