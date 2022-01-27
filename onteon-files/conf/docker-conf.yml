@@ -1,6 +1,6 @@
 app:
   name: 'onteon-demo-app-fridge-docker'
-  version: '1.0.0'
+  version: '1.1.0'
   appType: 'standard'
   procType: 'docker'
   processProvider:
@@ -8,7 +8,7 @@ app:
     version: '1.0.0'
     executable:
       start:
-        imageName: 'onteon/demo-app-fridge:1.0.0'
+        imageName: 'onteon/demo-app-fridge:1.1.0'
         exposedPort: '${ont_port_1}'
         innerPort: '3000'
         pullNewerImage: false
